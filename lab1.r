@@ -1,20 +1,39 @@
-#lab1_data.r
-EPI_data <- read.csv('/Users/hong/Dropbox/10th/data analytics/lab1/2010EPI_data.csv')
-View(EPI_data)
+#lab2 Part 1
+#read in data
+EPI_data <- read.csv("EPI_data.csv")
+
+#set as default
 attach(EPI_data)
-fix(EPI_data)
-EPI_data$EPI
 
-tf<- is.na(EPI_data)
-E <- EPI_data[!tf]
-
-#exercise 1
+#set to T/F if N/A
+tf<-is.na(EPI)
+#filter out F
+E<-EPI[!tf]
 
 summary(EPI)
+fivenum(EPI, na.rm = TRUE)
 
-fivenum(EPI)
+#generate histogram of EPI
 stem(EPI)
 hist(EPI)
+hist(EPI,seq(30.,95.,1.0),prob=TRUE)
+lines(density(EPI,na.rm=TRUE,bw="SJ"))
+rug(EPI)
 
-# there is an issue with my R version, environment and everything is not working well on my mac.
-# I will do the the lab exercise on my PC later.
+
+plot(ecdf(EPI), do.points=FALSE, verticals=TRUE)
+
+par(pty="s")
+qqnorm(EPI)
+qqline(EPI)
+
+x<-seq(30,95,1)
+qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
+qqline(x)
+
+boxplot(EPI,DALY)
+qqplot(EPI,DALY)
+
+
+
+
